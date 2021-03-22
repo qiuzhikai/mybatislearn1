@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qzkMybatis.dao.StudentDao">
+    <select id="searchAll" resultType="com.qzkMybatis.domain.Student">
+        select id,name,email,age from student order by id
+    </select>
+
+    <insert id="insertStudent">
+        insert into student value(#{id},#{name},#{email},#{age})
+    </insert>
+
+    <select id="selectStudentbyid" parameterType="java.lang.Integer" resultType="com.qzkMybatis.domain.Student">
+         select id,name,email,age from student where id = #{id}
+    </select>
+
+    <select id="selectMulitParam" resultType="com.qzkMybatis.domain.Student">
+        select id,name,email,age from student where name = #{myname} or age = #{myage}
+    </select>
+
+
+    <resultMap id="studentMap" type="com.qzkMybatis.domain.Student">
+<!--        主键列使用id标签-->
+        <id column="id" property="id"></id>
+<!--        非主键列使用result标签-->
+        <result column="name" property="name"></result>
+        <result column="email" property="email"></result>
+        <result column="age" property="age"></result>
+    </resultMap>
+
+    <select id="selectMulitObject" resultMap="studentMap">
+        select * from student where name = #{paramname} or age = #{paramAge}
+    </select>
+
+    <select id="selectCount" resultType="int">
+        select count(*) from student
+    </select>
+
+
+</mapper>
